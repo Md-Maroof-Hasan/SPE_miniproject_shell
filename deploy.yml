@@ -1,11 +1,17 @@
 ---
 - name: Pull Docker Image from Docker Hub
   hosts: localhost
-  remote_user: raju
-  become: false
+  become: true
+
   tasks:
+
+    - name: Ensure Docker service is running
+      service:
+        name: docker
+        state: started
+
     - name: Pull Docker Image
-      docker_image:
+      community.docker.docker_image:
         name: "iiitb/calculator"
         source: pull
       register: docker_pull_result
@@ -13,10 +19,12 @@
     - name: Display Docker Pull Result
       debug:
         var: docker_pull_result
-        
-    - name: Start Docker service
-      service:
-        name: docker
+
+    - name: Run Docker Container
+      community.docker.docker_container:
+        name: calculator
+        image: iiitb/calculator
         state: started
-    - name: Running container
-      shell: docker run -it -d --name calculator iiitb/calculator /bin/bash
+        tty: true
+        detach: true
+
