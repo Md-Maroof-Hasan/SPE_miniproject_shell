@@ -1,7 +1,7 @@
 ---
 - name: Pull Docker Image from Docker Hub
   hosts: localhost
-  become: true
+  become: false
 
   tasks:
 
@@ -27,4 +27,5 @@
         state: started
         tty: true
         detach: true
+
 
