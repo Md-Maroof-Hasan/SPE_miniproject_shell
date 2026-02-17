@@ -23,4 +23,5 @@ case $ch in
    4) res=`expr $a / $b`
    ;;
 esac
-Echo "Result : $res"
+echo "Result : $res"
+
